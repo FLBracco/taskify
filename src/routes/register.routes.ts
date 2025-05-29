@@ -15,6 +15,8 @@ userCreateRoutes.get('/test', async (_req: Request, res: Response)=>{
         console.error(err);
         res.status(500).json({message: "Error al obtener los usuarios ", err});
     }
-})
+});
+
+userCreateRoutes.post('/registro');
 
 export default userCreateRoutes;
