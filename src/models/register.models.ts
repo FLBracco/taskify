@@ -1,7 +1,7 @@
 import z from 'zod';
 
 const UserSchema = z.object({
-    username: z.string().trim().min(1).max(100),
+    name: z.string().trim().min(1).max(100),
     email: z.string().email().trim().min(1).max(100),
     password: z.string().trim().min(8).max(255)
         .regex(/[A-Z]/, "Debe tener al menos una letra mayúscula")
@@ -10,4 +10,4 @@ const UserSchema = z.object({
         .regex(/[^A-Za-z0-9]/, "Debe tener al menos un carácter especial")
 });
 
-export type userInput = z.infer<typeof UserSchema>;
+export type UserInput = z.infer<typeof UserSchema>;
