@@ -10,7 +10,7 @@ export async function createUser(user: UserInput){
        `;
         const {name, email, password} = user;
         const res = await pool.query(newUserQuery, [name, email, password]);
-        return res.rows[0];
+        return res.rows[0].id;
     } catch (err) {
         console.error("Error al crear el usuario en DB: ", err);
         throw new Error("Algo salio mal al crear el usuario")

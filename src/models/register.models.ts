@@ -11,3 +11,7 @@ const UserSchema = z.object({
 });
 
 export type UserInput = z.infer<typeof UserSchema>;
+
+export async function validateInput(input: unknown){
+    return UserSchema.safeParseAsync(input);
+}
