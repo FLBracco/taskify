@@ -1,5 +1,6 @@
 import express from 'express';
 import userCreateRoutes from './routes/register.routes.js';
+import { errorHandler } from './middlewares/errors.js';
 
 const app = express();
 app.use(express.json())
@@ -9,5 +10,6 @@ app.get('/', (_req, res)=>{
 });
 
 app.use('/usuarios', userCreateRoutes);
+app.use(errorHandler);
 
 export default app;

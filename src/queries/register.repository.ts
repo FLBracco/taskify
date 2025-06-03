@@ -1,5 +1,6 @@
 import pool from "../db/db.config.js";
 import { UserInput } from "../models/register.models.js";
+import { ConnectionError } from "../utils/customErrors.js";
 
 // Crear un nuevo usuario.
 export async function createUser(user: UserInput){
@@ -12,8 +13,8 @@ export async function createUser(user: UserInput){
         const res = await pool.query(newUserQuery, [name, email, password]);
         return res.rows[0].id;
     } catch (err) {
-        console.error("Error al crear el usuario en DB: ", err);
-        throw new Error("Algo salio mal al crear el usuario")
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
     };
 };
 
@@ -27,7 +28,7 @@ export async function userExists(name: string, email: string){
         const res = await pool.query(findUserQuery, [name, email]);
         return res.rows.length > 0;
     }catch(err){
-        console.error("Error al buscar las credenciales en la DB: ", err);
-        throw new Error("Algo salio mal al buscar las credenciales");
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
     };
 };

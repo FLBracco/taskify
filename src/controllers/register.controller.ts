@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { createUserService } from "../services/register.service.js";
 import { validateInput } from '../models/register.models.js'
 
-export async function createUserController(req: Request, res: Response){
+export async function createUserController(req: Request, res: Response, next: NextFunction){
     try{
         // Validación de los inputs
         const result = await validateInput(req.body);
@@ -22,7 +22,6 @@ export async function createUserController(req: Request, res: Response){
             data: user
         })
     } catch (err) {
-        console.error("Error en el servidor: ", err);
-        res.status(500).json({message: "Error interno en el servidor"});
+        next(err);
     }
 }
