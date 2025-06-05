@@ -3,6 +3,7 @@ export class ConnectionError extends Error{
     constructor(message: string){
         super(message);
         this.name = 'ConnectionError'
+        this.stack = ''
         this.statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
     }
 };
