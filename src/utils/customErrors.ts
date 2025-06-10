@@ -17,6 +17,15 @@ export class ConflictError extends Error{
     }
 };
 
+export class CredentialsError extends Error{
+    statusCode: number;
+    constructor(message:string){
+        super(message);
+        this.name = 'CredentialsError';
+        this.statusCode = HttpStatus.UNAUTHORIZED
+    }
+};
+
 export enum HttpStatus {
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,

@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { createUser, userExists } from '../queries/register.repository.js';
+import { createUser, userExists } from '../queries/user.repository.js';
 import { UserInput } from "../models/register.models.js";
 import { ConflictError } from '../utils/customErrors.js';
 
@@ -10,8 +10,8 @@ export async function createUserService(user: UserInput){
     // Encriptamos la password
     const pswEncrypted = await bcrypt.hash(password, saltRounds);
     // Corroboramos si las credenciales estan en uso
-    const userFind = await userExists(name, email);
-    if(userFind){
+    const findUser = await userExists(name, email);
+    if(findUser){
         throw new ConflictError("Las credenciales ya están en uso");
     }
     const newUser = {

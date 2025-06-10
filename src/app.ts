@@ -1,5 +1,6 @@
 import express from 'express';
 import userCreateRoutes from './routes/register.routes.js';
+import loginRoutes from './routes/login.routes.js';
 import { errorHandler } from './middlewares/errors.js';
 
 const app = express();
@@ -10,6 +11,7 @@ app.get('/', (_req, res)=>{
 });
 
 app.use('/usuarios', userCreateRoutes);
+app.use('/', loginRoutes);
 app.use(errorHandler);
 
 export default app;

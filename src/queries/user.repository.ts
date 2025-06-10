@@ -32,3 +32,17 @@ export async function userExists(name: string, email: string){
         throw new ConnectionError('Error al conectar la base de datos');
     };
 };
+
+export async function findUser(name: string, email:string){
+    try {
+        const findUserQuery = `
+            SELECT * FROM users
+            WHERE name = $1 OR email = $2; 
+        `
+        const res = await pool.query(findUserQuery, [name, email]);
+        return res.rows[0];
+    } catch (err) {
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
+    }
+};
