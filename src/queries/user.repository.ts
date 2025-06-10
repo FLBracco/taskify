@@ -1,4 +1,5 @@
 import pool from "../db/db.config.js";
+import { LoginInput } from "../models/login.models.js";
 import { UserInput } from "../models/register.models.js";
 import { ConnectionError } from "../utils/customErrors.js";
 
@@ -33,7 +34,7 @@ export async function userExists(name: string, email: string){
     };
 };
 
-export async function findUser(name: string, email:string){
+export async function findUser(name: string, email:string): Promise <LoginInput | null>{
     try {
         const findUserQuery = `
             SELECT * FROM users

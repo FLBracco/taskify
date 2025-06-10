@@ -5,8 +5,12 @@ import { CredentialsError } from "../utils/customErrors.js";
 
 export async function loginService(input: LoginInput){
     const { name, email, password } = input;
-    const user = findUser(name, email);
+    const user = await findUser(name, email);
     if(!user){
-        throw new CredentialsError("Credenciales Invalidas");
+        throw new CredentialsError("Credenciales inválidas");
+    }
+    const isValid = await bcrypt.compare(password, user.password);
+    if(!isValid){
+        throw new CredentialsError("Credenciales inválidas");
     }
 }
