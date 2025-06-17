@@ -1,6 +1,7 @@
 import z from "zod";
 
 const LoginSchema = z.object({
+    id: z.number().int().positive().min(1),
     name: z.string().trim().min(1).max(100),
     email: z.string().email().trim().min(1).max(100),
     password: z.string().trim().min(8).max(255)
