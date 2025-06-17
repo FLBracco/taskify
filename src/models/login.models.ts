@@ -13,6 +13,6 @@ const LoginSchema = z.object({
 
 export type LoginInput = z.infer<typeof LoginSchema>;
 
-export async function validateInput(input: unknown){
+export async function validateLoginInput(input: unknown){
     return LoginSchema.safeParseAsync(input);
 }

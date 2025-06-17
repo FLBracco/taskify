@@ -1,9 +1,8 @@
 import express from "express";
+import { loginController } from "../controllers/login.controller";
 
 const loginRoutes = express.Router();
 
-loginRoutes.post('/login', (req, res) =>{
-    res.status(200).json({message: "Logeado con exito"});
-});
+loginRoutes.post('/login', loginController);
 
 export default loginRoutes;
