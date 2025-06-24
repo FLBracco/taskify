@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import userCreateRoutes from './routes/register.routes.js';
 import loginRoutes from './routes/login.routes.js';
 import { errorHandler } from './middlewares/errors.js';
+import { authMiddleware } from './middlewares/auth.js';
 
 const app = express();
 app.use(express.json())
@@ -14,6 +15,8 @@ app.get('/', (_req, res)=>{
 
 app.use('/usuarios', userCreateRoutes);
 app.use('/', loginRoutes);
+
+app.use(authMiddleware);
 app.use(errorHandler);
 
 export default app;
