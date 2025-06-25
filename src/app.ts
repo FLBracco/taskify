@@ -6,7 +6,8 @@ import { errorHandler } from './middlewares/errors.js';
 import { authMiddleware } from './middlewares/auth.js';
 
 const app = express();
-app.use(express.json())
+
+app.use(express.json());
 app.use(cookieParser());
 
 app.get('/', (_req, res)=>{
@@ -16,7 +17,6 @@ app.get('/', (_req, res)=>{
 app.use('/usuarios', userCreateRoutes);
 app.use('/', loginRoutes);
 
-app.use(authMiddleware);
 app.use(errorHandler);
 
 export default app;

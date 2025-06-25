@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction} from "express";
 import { loginService } from "../services/login.service.js";
-import { validateInput } from "../models/register.models.js";
+import { validateLoginInput } from "../models/login.models.js";
 
 export async function loginController(req: Request, res: Response, next: NextFunction){
     try {
-        const result = await validateInput(req.body);
+        const result = await validateLoginInput(req.body);
         if (!result.success){
             return res.status(400).json({
                 message: "Datos invalidos",

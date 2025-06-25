@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ConnectionError, ConflictError, HttpStatus } from "../utils/customErrors";
 import { ZodError } from "zod";
 
-export async function errorHandler (err: any, req: Request, res: Response, _next: NextFunction){ 
+export async function errorHandler (err: any, _req: Request, res: Response, next: NextFunction){ 
     if(err instanceof ConnectionError){
         return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({error: err.message});
     }

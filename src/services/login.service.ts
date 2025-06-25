@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
 import  jwt  from "jsonwebtoken";
 import { findUser } from "../queries/user.repository.js";
-import { UserInput } from "../models/register.models.js";
+import { LoginInput } from "../models/login.models.js";
 import { CredentialsError } from "../utils/customErrors.js";
 
-export async function loginService(input: UserInput){
+export async function loginService(input: LoginInput){
     const secret = process.env.SECRET_JWT_KEY;
     if(!secret){
         throw new Error("SECRET_JWT_KEY no esta definida.");
