@@ -13,9 +13,9 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction){
     try {
         const data = jwt.verify(token, secret) as TokenPayload;
         req.session.user = data;
+        next();
     } catch (err) {
         req.session.user = undefined;
         next(err);
     }
-    next();
 };
