@@ -26,6 +26,15 @@ export class CredentialsError extends Error{
     }
 };
 
+export class loginUnauthorized extends Error{
+    statusCode: number;
+    constructor(message:string){
+        super(message);
+        this.name = "ForbiddenError";
+        this.statusCode = HttpStatus.FORBIDDEN;
+    }
+};
+
 export enum HttpStatus {
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
