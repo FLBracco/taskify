@@ -30,3 +30,16 @@ export async function findCategories(category: CategoryType){
         throw new ConnectionError('Error al conectar la base de datos');
     }
 };
+
+export async function getCategories(){
+    try {
+        const getCategories = `
+            SELECT id, name FROM categories;
+        `
+        const res = await pool.query(getCategories);
+        return res.rows 
+    } catch (err) {
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
+    }
+}

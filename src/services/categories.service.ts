@@ -1,4 +1,4 @@
-import { createCategory, findCategories } from "../queries/categories.repository";
+import { createCategory, findCategories, getCategories } from "../queries/categories.repository";
 import { CategoryType } from "../models/categories.models";
 import { ConflictError } from "../utils/customErrors";
 
@@ -7,3 +7,7 @@ export async function createCategoriesService(category: CategoryType){
     if(categoriesExists) throw new ConflictError('La categoria ya existe');
     return await createCategory(category);;
 };
+
+export async function getCategoriesService(){
+    return await getCategories()
+}
