@@ -1,13 +1,19 @@
-import { createCategory, findCategories, getCategories } from "../queries/categories.repository";
-import { CategoryType } from "../models/categories.models";
-import { ConflictError } from "../utils/customErrors";
+import { createCategory, findCategories, findCategoriesByID, getCategories, updateCategories } from "../queries/categories.repository";
+import { CategoryParamsType, CategoryType } from "../models/categories.models";
+import { ConflictError, NotFoundError } from "../utils/customErrors";
 
 export async function createCategoriesService(category: CategoryType){
     const categoriesExists = await findCategories(category);
     if(categoriesExists) throw new ConflictError('La categoria ya existe');
-    return await createCategory(category);;
+    return await createCategory(category);
 };
 
 export async function getCategoriesService(){
-    return await getCategories()
+    return await getCategories();
+}
+
+export async function updateCategoriesService(id: CategoryParamsType, category: CategoryType){
+    const categoriesExists = await findCategoriesByID(id);
+    if(!categoriesExists) throw new NotFoundError('La categoria no existe');
+    return await updateCategories(id, category);
 }

@@ -1,5 +1,5 @@
 import pool from "../db/db.config";
-import { CategoryType } from "../models/categories.models";
+import { CategoryParamsType, CategoryType } from "../models/categories.models";
 import { ConnectionError } from "../utils/customErrors";
 // Crear nueva categoria
 
@@ -31,6 +31,20 @@ export async function findCategories(category: CategoryType){
     }
 };
 
+export async function findCategoriesByID(id: CategoryParamsType){
+    try {
+        const findCategoryByID = `
+            SELECT id, name FROM categories
+            WHERE id = $1;
+        `
+        const res = await pool.query(findCategoryByID, [id]);
+        return res.rows.length > 0;
+    } catch (err) {
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
+    }
+}
+
 export async function getCategories(){
     try {
         const getCategories = `
@@ -38,6 +52,22 @@ export async function getCategories(){
         `
         const res = await pool.query(getCategories);
         return res.rows 
+    } catch (err) {
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
+    }
+}
+
+export async function updateCategories(id: CategoryParamsType, name: CategoryType){
+    try {
+        const updateCategoriesQuery = `
+            UPDATE categories
+            SET name = $1
+            WHERE id = $2 
+            RETURNING id, name;
+        `
+        const res = await pool.query(updateCategoriesQuery, [name, id]);
+        return res.rows[0];
     } catch (err) {
         console.error("Error en la base de datos", err);
         throw new ConnectionError('Error al conectar la base de datos');

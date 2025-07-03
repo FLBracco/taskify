@@ -35,6 +35,15 @@ export class loginUnauthorized extends Error{
     }
 };
 
+export class NotFoundError extends Error{
+    statusCode: number;
+    constructor(message:string){
+        super(message);
+        this.name = 'NotFoundError';
+        this.statusCode = HttpStatus.NOT_FOUND;
+    }
+};
+
 export enum HttpStatus {
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
