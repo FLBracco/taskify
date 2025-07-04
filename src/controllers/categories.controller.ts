@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createCategoriesService, getCategoriesService, updateCategoriesService} from "../services/categories.service";
+import { createCategoriesService, deleteCategoriesService, getCategoriesService, updateCategoriesService} from "../services/categories.service";
 import { validateCategoryInput, validateCategoryParams } from "../models/categories.models";
 
 export async function createCategoriesController (req: Request, res: Response, next: NextFunction){
@@ -64,5 +64,25 @@ export async function updateCategoriesController(req: Request, res: Response, ne
         });
     } catch (err) {
         next(err)
+    }
+}
+
+export async function deleteCategoriesController(req: Request, res: Response, next: NextFunction){
+    try {
+        const resParams = await validateCategoryParams(req.params.id);
+        if(!resParams.success){
+            return res.status(400).json({
+                message: "Datos invalidos",
+                errors: resParams.error.flatten()
+            });
+        };
+        const id = resParams.data;
+        const result = await deleteCategoriesService(id);
+        return res.status(200).json({
+            message: 'Se borro la categoría correctamente',
+            result
+        });
+    } catch (err) {
+        next(err);
     }
 }

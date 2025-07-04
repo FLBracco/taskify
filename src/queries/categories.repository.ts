@@ -73,3 +73,18 @@ export async function updateCategories(id: CategoryParamsType, name: CategoryTyp
         throw new ConnectionError('Error al conectar la base de datos');
     }
 }
+
+export async function deleteCategories(id: CategoryParamsType){
+    try {
+        const deleteCategoriesQuery = `
+            DELETE FROM categories
+            WHERE id = $1
+            RETURNING id, name;
+        `;
+        const res = await pool.query(deleteCategoriesQuery, [id]);
+        return res.rows[0];
+    } catch (err) {
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
+    }
+}
