@@ -6,6 +6,7 @@ import loginRoutes from './routes/login.routes.js';
 import categoriesRoutes from './routes/categories.routes.js';
 import { errorHandler } from './middlewares/errors.js';
 import { authMiddleware } from './middlewares/auth.js';
+import tasksRoutes from './routes/tasks.routes.js';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.get('/', (_req, res)=>{
 app.use('/usuarios', userCreateRoutes);
 app.use('/', loginRoutes);
 app.use(authMiddleware, categoriesRoutes);
+app.use(authMiddleware, tasksRoutes);
 app.use(errorHandler);
 
 export default app;

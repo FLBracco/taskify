@@ -47,3 +47,18 @@ export async function findUser(name: string | undefined, email:string | undefine
         throw new ConnectionError('Error al conectar la base de datos');
     }
 };
+
+export async function findUserByID(id: number){
+    try {
+        const findUserQueryByID = `
+            SELECT * FROM users
+            WHERE id = $1;
+        `
+        const userID = id;
+        const result = await pool.query(findUserQueryByID, [userID]);
+        return result.rows.length > 0;
+    } catch (err) {
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
+    }
+}
