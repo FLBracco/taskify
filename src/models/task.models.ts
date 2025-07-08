@@ -2,7 +2,8 @@ import z from 'zod';
 
 const TaskSchema = z.object({
     title: z.string().min(3).max(255).trim(),
-    description: z.string()
+    description: z.string(),
+    categories: z.array(z.number()).optional()
 }); // Deberia crear otro schema para la parte del put?? 
 
 export type TaskInput = z.infer<typeof TaskSchema>;

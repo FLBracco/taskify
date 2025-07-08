@@ -14,7 +14,8 @@ export async function createTasksController(req: Request, res: Response, next: N
         };
         const newTask = {
             title: req.body.title,
-            description: req.body.description
+            description: req.body.description,
+            categories: req.body.categories
         };
         const userID = user!.id
         const task = await createTasksService(userID, newTask)
