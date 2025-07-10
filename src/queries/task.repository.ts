@@ -42,3 +42,17 @@ export async function createTask(id: number, task: TaskInput){
         throw new ConnectionError('Error al conectar la base de datos');
     }
 }
+
+export async function getMeTask(userID: number){
+    try {
+        const getMeTaskQuery = `
+            SELECT id, title, description, completed FROM tasks
+            WHERE user_id = $1;
+        `;
+        const result = await pool.query(getMeTaskQuery, [userID]);
+        return result.rows[0];
+    } catch (err) {
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
+    }
+}

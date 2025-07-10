@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createTasksService } from "../services/tasks.service";
+import { createTasksService, getMeTaskService } from "../services/tasks.service";
 import { validateTaskInput } from "../models/task.models";
 
 export async function createTasksController(req: Request, res: Response, next: NextFunction){
@@ -25,5 +25,18 @@ export async function createTasksController(req: Request, res: Response, next: N
         })
     } catch (err) {
         next(err)
+    }
+}
+
+export async function getMeTaskController(req: Request, res: Response, next: NextFunction){
+    try {
+        const { user } = req.session;
+        const task = await getMeTaskService(user!.id);
+        return res.status(200).json({
+            message: "Estás son las tareas del usuario",
+            task
+        });
+    } catch (err) {
+        next(err);
     }
 }
