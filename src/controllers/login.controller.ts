@@ -20,7 +20,7 @@ export async function loginController(req: Request, res: Response, next: NextFun
             maxAge: 1000 * 60 * 60 // duración de la cookie 1 hora
             })
             .status(200)
-            .json({message: "Login exitoso"});
+            .json({message: "Inicio de sesión exitoso"});
     } catch (err) {
         next(err);
     }

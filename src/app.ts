@@ -28,7 +28,7 @@ app.get('/', (_req, res)=>{
     res.status(200).json({message: "Servidor prendido correctamente!"});
 });
 
-app.use('/usuarios', userCreateRoutes);
+app.use('/', userCreateRoutes);
 app.use('/', loginRoutes);
 app.use(authMiddleware, categoriesRoutes);
 app.use(authMiddleware, tasksRoutes);

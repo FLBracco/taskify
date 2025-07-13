@@ -7,7 +7,7 @@ const loginRoutes = express.Router();
 loginRoutes.post('/login', loginController);
 
 loginRoutes.post('/logout', (_req: Request, res:Response)=>{
-    res.clearCookie('accessToken').json({message: "Logout Successful"});
+    res.clearCookie('accessToken').json({message: "Cierre de sesión exitoso."});
 })
 
 loginRoutes.get('/protected', authMiddleware, (req: Request, res: Response)=>{

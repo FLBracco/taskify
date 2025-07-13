@@ -50,7 +50,7 @@ export async function getMeTask(userID: number){
             WHERE user_id = $1;
         `;
         const result = await pool.query(getMeTaskQuery, [userID]);
-        return result.rows[0];
+        return result.rows;
     } catch (err) {
         console.error("Error en la base de datos", err);
         throw new ConnectionError('Error al conectar la base de datos');
