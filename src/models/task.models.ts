@@ -6,7 +6,14 @@ const TaskSchema = z.object({
     categories: z.array(z.number()).optional()
 }); // Deberia crear otro schema para la parte del put?? 
 
+const UpdateTaskSchema = z.object({
+    title: z.string().min(1).max(100).optional(),
+    description: z.string().max(255).optional(),
+    categoryID: z.number().int().positive().optional()
+});
+
 export type TaskInput = z.infer<typeof TaskSchema>;
+export type UpdateTaskInput = z.infer<typeof UpdateTaskSchema>;
 
 export async function validateTaskInput(input: unknown){
     return TaskSchema.safeParseAsync(input);
