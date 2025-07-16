@@ -1,13 +1,20 @@
-node_modules
+# 📦 Dependencias
+node_modules/
 
-Objetivos.md
+# 🧪 Archivos y carpetas de pruebas
+pruebas/
 
+# ⚙️ Configuración del editor
+.vscode/
+
+# 🚀 Archivos de entorno
 .env
+.env.*    # Ignora variantes como .env.development, .env.local, etc.
 
-.vscode
+# 🛠️ Archivos de compilación o salida
+dist/
+build/
 
-pruebas
-
-./dist
-
+# 📝 Archivos personales o temporales
+Objetivos.md
 Objectives.txt
