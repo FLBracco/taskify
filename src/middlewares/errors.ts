@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ConnectionError, ConflictError, HttpStatus, CredentialsError, NotFoundError} from "../utils/customErrors";
+import { ConnectionError, ConflictError, HttpStatus, CredentialsError, NotFoundError, BadRequestError} from "../utils/customErrors";
 import { ZodError } from "zod";
 
 export async function errorHandler (err: any, _req: Request, res: Response, next: NextFunction){ 
@@ -9,6 +9,10 @@ export async function errorHandler (err: any, _req: Request, res: Response, next
 
     if(err instanceof ConflictError){
         return res.status(HttpStatus.CONFLICT).json({error: err.message});
+    }
+
+    if(err instanceof BadRequestError){
+        return res.status(HttpStatus.BAD_REQUEST).json({error: err.message});
     }
 
     if(err instanceof ZodError){

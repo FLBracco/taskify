@@ -44,6 +44,15 @@ export class NotFoundError extends Error{
     }
 };
 
+export class BadRequestError extends Error{
+     statusCode: number;
+     constructor(message: string){
+        super(message);
+        this.name = "BadRequestError";
+        this.statusCode = HttpStatus.BAD_REQUEST;
+     };
+};
+
 export enum HttpStatus {
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,

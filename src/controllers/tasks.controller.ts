@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { createTasksService, getMeTaskService } from "../services/tasks.service";
-import { validateTaskInput } from "../models/task.models";
+import { createTasksService, getMeTaskService, updateTaskService } from "../services/tasks.service";
+import { validateTaskInput, validateUpdateTaskInput } from "../models/task.models";
+import { validateCategoryParams } from "../models/categories.models";
 
 export async function createTasksController(req: Request, res: Response, next: NextFunction){
     try {
@@ -36,6 +37,37 @@ export async function getMeTaskController(req: Request, res: Response, next: Nex
             message: "Estás son las tareas del usuario",
             task
         });
+    } catch (err) {
+        next(err);
+    }
+}
+
+export async function updateTaskController(req: Request, res: Response, next: NextFunction){
+    try {
+        const resParams = await validateCategoryParams(req.params.id);
+        const resBody = await validateUpdateTaskInput(req.body);
+        
+        if(!resParams.success){
+            return res.status(400).json({
+                message: "Datos invalidos",
+                errors: resParams.error.flatten()
+            });
+        };
+        if(!resBody.success){
+            return res.status(400).json({
+                message: "Datos invalidos",
+                errors: resBody.error.flatten()
+            });
+        };
+
+        const task = {
+            title: req.body.title,
+            description: req.body.description,
+            categories: req.body.categories
+        };
+        const taskID = req.params.id;
+        const result = await updateTaskService(Number(taskID), task);
+        return res.status(200).json(result);
     } catch (err) {
         next(err);
     }

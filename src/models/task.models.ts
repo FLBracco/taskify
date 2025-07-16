@@ -9,7 +9,7 @@ const TaskSchema = z.object({
 const UpdateTaskSchema = z.object({
     title: z.string().min(1).max(100).optional(),
     description: z.string().max(255).optional(),
-    categoryID: z.number().int().positive().optional()
+    categories: z.array(z.number()).optional()
 });
 
 export type TaskInput = z.infer<typeof TaskSchema>;
@@ -17,4 +17,8 @@ export type UpdateTaskInput = z.infer<typeof UpdateTaskSchema>;
 
 export async function validateTaskInput(input: unknown){
     return TaskSchema.safeParseAsync(input);
+};
+
+export async function validateUpdateTaskInput(input: unknown){
+    return UpdateTaskSchema.safeParseAsync(input);
 };
