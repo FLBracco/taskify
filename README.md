@@ -66,10 +66,10 @@ cd taskify
 npm install
 ```
 
-3. Creá un archivo .env basado en .env.example y configurá tus variables de entorno.
+3. Creá un archivo `.env` basado en `.env.example` y configurá tus variables de entorno.
 
-4. Ejecutá el script taskify.sql para crear las tablas y relaciones necesarias en tu base de datos PostgreSQL.
-Este archivo se encuentra en la raíz del repositorio.
+4. Ejecutá el script `taskify.sql` para crear las tablas y relaciones necesarias en tu base de datos PostgreSQL.
+Este archivo se encuentra en la carpeta `/db` del repositorio.
 
 5. Ejecutá el servidor en desarrollo:
 ```bash
@@ -106,6 +106,18 @@ npm run dev
 
 ---
 
+## 🧠 Aprendizajes destacados
+
+Este proyecto fue una oportunidad para aplicar:
+- Arquitectura modular con separación de responsabilidades
+- Validaciones con Zod
+- Relaciones muchos a muchos en PostgreSQL sin ORM
+- Autenticación moderna con JWT y manejo seguro de sesiones con cookies
+- Control de errores centralizado
+- Tipado estricto con TypeScript
+
+---
+
 ## 🌱 Estado del proyecto
 * 🔨 Desarrollo completo
-* 🧪 Testeo manual con Postman
+* 🧪 Testeado manualmente con Postman
