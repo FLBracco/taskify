@@ -15,8 +15,6 @@ Este proyecto forma parte de mi portfolio como desarrollador backend.
 - CRUD completo para categorías
 - Obtener tareas del usuario autenticado (`GET /tasks/me`)
 - Crear tareas y asignarlas a una categoría (`POST /tasks`)
-
-🔧 En desarrollo:
 - Actualizar tareas (`PUT /tasks/:id`)
 - Eliminar tareas (`DELETE /tasks/:id`)
 
@@ -70,7 +68,10 @@ npm install
 
 3. Creá un archivo .env basado en .env.example y configurá tus variables de entorno.
 
-4. Ejecutá el servidor en desarrollo:
+4. Ejecutá el script taskify.sql para crear las tablas y relaciones necesarias en tu base de datos PostgreSQL.
+Este archivo se encuentra en la raíz del repositorio.
+
+5. Ejecutá el servidor en desarrollo:
 ```bash
 npm run dev
 ```
@@ -86,26 +87,25 @@ npm run dev
 | POST   | /logout   | Cierre de sesión    |
 
 🗂️ Categorías
-| Método | Endpoint         | Descripción                  |
-| ------ | ---------------- | ---------------------------- |
-| GET    | /categories      | Obtener todas las categorías |
-| POST   | /categories      | Crear una nueva categoría    |
-| PUT    | /categories/\:id | Actualizar una categoría     |
-| DELETE | /categories/\:id | Eliminar una categoría       |
+| Método | Endpoint         | Descripción                        |
+| ------ | ---------------- | ---------------------------------- |
+| GET    | /categories      | Obtener todas las categorías       |
+| POST   | /categories      | Crear una nueva categoría          |
+| PUT    | /categories/\:id | Actualizar una categoría existente |
+| DELETE | /categories/\:id | Eliminar una categoría por su ID   |
+
 
 ✅ Tareas
-| Método | Endpoint  | Descripción                         |
-| ------ | --------- | ----------------------------------- |
-| GET    | /tasks/me | Ver tareas del usuario logueado     |
-| POST   | /tasks    | Crear una nueva tarea con categoría |
+| Método | Endpoint    | Descripción                                                               |
+| ------ | ----------- | ------------------------------------------------------------------------- |
+| GET    | /tasks/me   | Obtener las tareas del usuario autenticado                                |
+| POST   | /tasks      | Crear una nueva tarea con sus categorías asociadas                        |
+| PUT    | /tasks/\:id | Actualizar una tarea específica (título, descripción, estado, categorías) |
+| DELETE | /tasks/\:id | Eliminar una tarea específica por su ID                                   |
 
-Próximamente
-* PUT /tasks/:id
-* DELETE /tasks/:id
 
 ---
 
 ## 🌱 Estado del proyecto
-* 🔨 Desarrollo activo
-* 🔄 Faltan endpoints PUT y DELETE de tareas
+* 🔨 Desarrollo completo
 * 🧪 Testeo manual con Postman
