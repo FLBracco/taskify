@@ -9,6 +9,7 @@ const TaskSchema = z.object({
 const UpdateTaskSchema = z.object({
     title: z.string().min(1).max(100).optional(),
     description: z.string().max(255).optional(),
+    completed: z.boolean().optional(),
     categories: z.array(z.number()).optional()
 });
 

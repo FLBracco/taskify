@@ -46,11 +46,32 @@ export async function createTask(id: number, task: TaskInput){
 export async function getMeTask(userID: number){
     try {
         const getMeTaskQuery = `
-            SELECT id, title, description, completed FROM tasks
-            WHERE user_id = $1;
+            SELECT tasks.id as TaskID, tasks.title, tasks.description, tasks.completed, categories.id as CategoryID, categories.name as Categoryname FROM tasks
+            INNER JOIN task_categories AS tc ON tasks.id =  tc.task_id
+            INNER JOIN categories ON tc.category_id = categories.id
+            WHERE tasks.user_id = $1;
         `;
         const result = await pool.query(getMeTaskQuery, [userID]);
-        return result.rows;
+        const tasksMap = new Map();
+        for (const row of result.rows){
+            const {taskid, title, description, completed, categoryid, categoryname} = row;
+            if(!tasksMap.has(taskid)){
+                tasksMap.set(taskid, {
+                    taskid: taskid,
+                    title,
+                    description,
+                    completed,
+                    categories: []
+                });
+            };
+
+            tasksMap.get(taskid).categories.push({
+                id: categoryid,
+                name: categoryname
+            });
+        }
+        const tasks = Array.from(tasksMap.values());
+        return tasks;
     } catch (err) {
         console.error("Error en la base de datos", err);
         throw new ConnectionError('Error al conectar la base de datos');
@@ -59,9 +80,9 @@ export async function getMeTask(userID: number){
 
 export async function updateTask(taskID: number, task: UpdateTaskInput){
     try {
-        const {title, description, categories} = task
+        const {title, description, completed,categories} = task
         const updateTaskPH: string[] = [];
-        const taskValues: (string | number)[] = [];
+        const taskValues: (string | number | boolean)[] = [];
         let count = 1;
         
         if(title){
@@ -73,6 +94,11 @@ export async function updateTask(taskID: number, task: UpdateTaskInput){
             updateTaskPH.push(`description = $${count++}`);
             taskValues.push(description);
         }
+
+        if(typeof completed !== 'undefined'){
+            updateTaskPH.push(`completed = $${count++}`);
+            taskValues.push(completed);
+        };
         
         if(!categories && updateTaskPH.length === 0) throw new BadRequestError('No hay datos para actualizar.');
         
@@ -107,6 +133,21 @@ export async function findTaskByID(taskID: number){
         `;
         const res = await pool.query(taskQuery, [taskID]);
         return res.rows.length > 0;
+    } catch (err) {
+        console.error("Error en la base de datos", err);
+        throw new ConnectionError('Error al conectar la base de datos');
+    }
+}
+
+export async function deleteTask(taskID: number){
+    try {
+        const deleteTaskQuery = `
+            DELETE FROM tasks
+            WHERE id = $1
+            RETURNING *;
+        `;
+        const res = await pool.query(deleteTaskQuery, [taskID]);
+        return res.rows[0];
     } catch (err) {
         console.error("Error en la base de datos", err);
         throw new ConnectionError('Error al conectar la base de datos');

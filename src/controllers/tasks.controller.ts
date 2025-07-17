@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createTasksService, getMeTaskService, updateTaskService } from "../services/tasks.service";
+import { createTasksService, deleteTaskService, getMeTaskService, updateTaskService } from "../services/tasks.service";
 import { validateTaskInput, validateUpdateTaskInput } from "../models/task.models";
 import { validateCategoryParams } from "../models/categories.models";
 
@@ -63,10 +63,29 @@ export async function updateTaskController(req: Request, res: Response, next: Ne
         const task = {
             title: req.body.title,
             description: req.body.description,
+            completed: req.body.completed,
             categories: req.body.categories
         };
         const taskID = req.params.id;
         const result = await updateTaskService(Number(taskID), task);
+        return res.status(200).json(result);
+    } catch (err) {
+        next(err);
+    }
+}
+
+export async function deleteTaskController(req: Request, res: Response, next: NextFunction){
+    try {
+        const resParams = await validateCategoryParams(req.params.id);
+        if(!resParams.success){
+            return res.status(400).json({
+                message: "Datos invalidos",
+                errors: resParams.error.flatten()
+            });
+        };
+        console.log(resParams.data);
+        const taskID = resParams.data
+        const result = await deleteTaskService(Number(taskID));
         return res.status(200).json(result);
     } catch (err) {
         next(err);
